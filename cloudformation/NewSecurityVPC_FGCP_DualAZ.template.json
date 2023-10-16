@@ -1,6 +1,6 @@
 {
 	"AWSTemplateFormatVersion": "2010-09-09",
-	"Description": "(v10.1) AWS CFT to deploy a FGCP based Active-Passive HA solution with two FortiGates in two AZs",
+	"Description": "(v10.2) AWS CFT to deploy a FGCP based Active-Passive HA solution with two FortiGates in two AZs",
 	"Metadata": {
 		"AWS::CloudFormation::Interface": {
 			"ParameterGroups": [
@@ -45,9 +45,9 @@
 						"KeyPair",
 						"EncryptVolumes",
 						"OnlyPrivateEC2API",
-						"InitS3Bucket",
 						"FortiOSVersion",
 						"LicenseType",
+						"InitS3Bucket",
 						"FortiGate1LicenseFile",
 						"FortiGate2LicenseFile",
 						"FortiGate1FortiFlexToken",
@@ -325,8 +325,7 @@
 		},
 		"InitS3Bucket": {
 			"Type": "String",
-			"MinLength": "1",
-			"Description": "Provide the Init S3 Bucket name, where your config files will be created  *** the bucket should exist in the same region as this deployment for successful bootstrapping ***"
+			"Description": "[BYOL Only, leave blank otherwise] Provide the Init S3 Bucket name, where your config files will be created  *** the bucket should exist in the same region as this deployment for successful bootstrapping ***"
 		},
 		"FortiOSVersion": {
 			"Type": "String",
@@ -417,6 +416,14 @@
 					"Ref": "TgwAttach"
 				},
 				"Yes"
+			]
+		},
+		"CreateVpcRouteToFgt1InPrivRtb": {
+			"Fn::Equals": [
+				{
+					"Ref": "TgwAttach"
+				},
+				"No"
 			]
 		},
 		"CreateTgw": {
@@ -1087,7 +1094,6 @@
 		"TransitGatewayRoute1": {
 			"Type": "AWS::EC2::TransitGatewayRoute",
 			"Condition": "CreateTgw",
-			"DependsOn": "RunTgwApplianceMode",
 			"Properties": {
 				"TransitGatewayAttachmentId": {
 					"Ref": "TransitGatewaySecurityVpcAttachment"
@@ -1200,6 +1206,19 @@
 		},
 		"VPCRoute3": {
 			"Type": "AWS::EC2::Route",
+			"Condition": "CreateVpcRouteToFgt1InPrivRtb",
+			"Properties": {
+				"RouteTableId": {
+					"Ref": "PrivateRouteTable"
+				},
+				"DestinationCidrBlock": "0.0.0.0/0",
+				"NetworkInterfaceId": {
+					"Ref": "Fgt1Eni1"
+				}
+			}
+		},
+		"VPCRoute4": {
+			"Type": "AWS::EC2::Route",
 			"Condition": "CreateTgw",
 			"DependsOn": [
 				"TransitGateway",
@@ -1216,7 +1235,7 @@
 				}
 			}
 		},
-		"VPCRoute4": {
+		"VPCRoute5": {
 			"Type": "AWS::EC2::Route",
 			"Condition": "ExistingTgw",
 			"DependsOn": [
@@ -1384,6 +1403,7 @@
 		},
 		"RunTgwApplianceMode": {
 			"Type": "Custom::RunTgwApplianceMode",
+			"DependsOn": "TransitGatewayRoute1",
 			"Condition": "CreateAttachments",
 			"Properties": {
 				"ServiceToken": {

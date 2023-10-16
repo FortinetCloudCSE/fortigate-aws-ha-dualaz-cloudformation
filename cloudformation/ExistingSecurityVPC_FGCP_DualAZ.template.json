@@ -1,6 +1,6 @@
 {
 	"AWSTemplateFormatVersion": "2010-09-09",
-	"Description": "(v10.1) AWS CFT to deploy a FGCP based Active-Passive HA solution with two FortiGates in two AZs",
+	"Description": "(v10.2) AWS CFT to deploy a FGCP based Active-Passive HA solution with two FortiGates in two AZs",
 	"Metadata": {
 		"AWS::CloudFormation::Interface": {
 			"ParameterGroups": [{
@@ -30,9 +30,9 @@
 						"OnlyPrivateEC2API",
 						"S3EndpointDeployment",
 						"PublicSubnet2RouteTableID",
-						"InitS3Bucket",
 						"FortiOSVersion",
 						"LicenseType",
+						"InitS3Bucket",
 						"FortiGate1LicenseFile",
 						"FortiGate2LicenseFile",
 						"FortiGate1FortiFlexToken",
@@ -263,8 +263,7 @@
 		},
 		"InitS3Bucket": {
 			"Type": "String",
-			"MinLength": "1",
-			"Description": "Provide the Init S3 Bucket name, where your config files will be created  *** the bucket should exist in the same region as this deployment for successful bootstrapping ***"
+			"Description": "[BYOL Only, leave blank otherwise] Provide the Init S3 Bucket name, where your config files will be created  *** the bucket should exist in the same region as this deployment for successful bootstrapping ***"
 		},
 		"FortiOSVersion": {
 			"Type": "String",
