@@ -55,7 +55,7 @@ git clone https://github.com/FortinetCloudCSE/fortigate-aws-ha-dualaz-cloudforma
 
 10.  On the main AWS CloudFormation console, you will now see your stack being created.  You can monitor the progress by selecting your stack and then select the Events tab.
 
-	![](deploy10.png)
+        ![](deploy10.png)
 
 11.  Once the stack creation has completed successfully, select the Outputs tab to get the login information for the FortiGate instances and cluster.  If you chose to deploy a new TGW as part of the deployment you will see the IDs of your Transit Gateway and relevant TGW Route Tables.  These will be used as inputs for the **'SpokeVPC_TGW_DualAZ.template.json'** template.
 
