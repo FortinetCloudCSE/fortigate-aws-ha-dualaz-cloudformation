@@ -366,46 +366,46 @@
 	"Mappings": {
 		"FortiOSIntelAMISearchString": {
 			"6.4.x": {
-				"BYOL": "FortiGate-VM64-AWS *(6.4.*)*",
-				"Flex": "FortiGate-VM64-AWS *(6.4.*)*",
-				"PAYG": "FortiGate-VM64-AWSONDEMAND *(6.4.*)*"
+				"BYOL": "FortiGate-VM64-AWS *(6.4.*)*|dlaioq277sglm5mw1y1dmeuqa",
+				"Flex": "FortiGate-VM64-AWS *(6.4.*)*|dlaioq277sglm5mw1y1dmeuqa",
+				"PAYG": "FortiGate-VM64-AWSONDEMAND *(6.4.*)*|2wqkpek696qhdeo7lbbjncqli"
 			},
 			"7.0.x": {
-				"BYOL": "FortiGate-VM64-AWS *(7.0.*)*",
-				"Flex": "FortiGate-VM64-AWS *(7.0.*)*",
-				"PAYG": "FortiGate-VM64-AWSONDEMAND *(7.0.*)*"
+				"BYOL": "FortiGate-VM64-AWS *(7.0.*)*|dlaioq277sglm5mw1y1dmeuqa",
+				"Flex": "FortiGate-VM64-AWS *(7.0.*)*|dlaioq277sglm5mw1y1dmeuqa",
+				"PAYG": "FortiGate-VM64-AWSONDEMAND *(7.0.*)*|2wqkpek696qhdeo7lbbjncqli"
 			},
 			"7.2.x": {
-				"BYOL": "FortiGate-VM64-AWS *(7.2.*)*",
-				"Flex": "FortiGate-VM64-AWS *(7.2.*)*",
-				"PAYG": "FortiGate-VM64-AWSONDEMAND *(7.2.*)*"
+				"BYOL": "FortiGate-VM64-AWS *(7.2.*)*|dlaioq277sglm5mw1y1dmeuqa",
+				"Flex": "FortiGate-VM64-AWS *(7.2.*)*|dlaioq277sglm5mw1y1dmeuqa",
+				"PAYG": "FortiGate-VM64-AWSONDEMAND *(7.2.*)*|2wqkpek696qhdeo7lbbjncqli"
 			},
 			"7.4.x": {
-				"BYOL": "FortiGate-VM64-AWS *(7.4.*)*",
-				"Flex": "FortiGate-VM64-AWS *(7.4.*)*",
-				"PAYG": "FortiGate-VM64-AWSONDEMAND *(7.4.*)*"
+				"BYOL": "FortiGate-VM64-AWS *(7.4.*)*|dlaioq277sglm5mw1y1dmeuqa",
+				"Flex": "FortiGate-VM64-AWS *(7.4.*)*|dlaioq277sglm5mw1y1dmeuqa",
+				"PAYG": "FortiGate-VM64-AWSONDEMAND *(7.4.*)*|2wqkpek696qhdeo7lbbjncqli"
 			}
 		},
 		"FortiOSArmAMISearchString": {
 			"6.4.x": {
-				"BYOL": "FortiGate-VMARM64-AWS *(6.4.*)*",
-				"Flex": "FortiGate-VMARM64-AWS *(6.4.*)*",
-				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(6.4.*)*"
+				"BYOL": "FortiGate-VMARM64-AWS *(6.4.*)*|33ndn84xbrajb9vmu5lxnfpjq",
+				"Flex": "FortiGate-VMARM64-AWS *(6.4.*)*|33ndn84xbrajb9vmu5lxnfpjq",
+				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(6.4.*)*|8gc40z1w65qjt61p9ps88057n"
 			},
 			"7.0.x": {
-				"BYOL": "FortiGate-VMARM64-AWS *(7.0.*)*",
-				"Flex": "FortiGate-VMARM64-AWS *(7.0.*)*",
-				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(7.0.*)*"
+				"BYOL": "FortiGate-VMARM64-AWS *(7.0.*)*|33ndn84xbrajb9vmu5lxnfpjq",
+				"Flex": "FortiGate-VMARM64-AWS *(7.0.*)*|33ndn84xbrajb9vmu5lxnfpjq",
+				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(7.0.*)*|8gc40z1w65qjt61p9ps88057n"
 			},
 			"7.2.x": {
-				"BYOL": "FortiGate-VMARM64-AWS *(7.2.*)*",
-				"Flex": "FortiGate-VMARM64-AWS *(7.2.*)*",
-				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(7.2.*)*"
+				"BYOL": "FortiGate-VMARM64-AWS *(7.2.*)*|33ndn84xbrajb9vmu5lxnfpjq",
+				"Flex": "FortiGate-VMARM64-AWS *(7.2.*)*|33ndn84xbrajb9vmu5lxnfpjq",
+				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(7.2.*)*|8gc40z1w65qjt61p9ps88057n"
 			},
 			"7.4.x": {
-				"BYOL": "FortiGate-VMARM64-AWS *(7.4.*)*",
-				"Flex": "FortiGate-VMARM64-AWS *(7.4.*)*",
-				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(7.4.*)*"
+				"BYOL": "FortiGate-VMARM64-AWS *(7.4.*)*|33ndn84xbrajb9vmu5lxnfpjq",
+				"Flex": "FortiGate-VMARM64-AWS *(7.4.*)*|33ndn84xbrajb9vmu5lxnfpjq",
+				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(7.4.*)*|8gc40z1w65qjt61p9ps88057n"
 			}
 		}
 	},
@@ -2760,10 +2760,8 @@
 								"def handler(event, context):",
 								"    if event['RequestType'] == 'Create':",
 								"        logger.info('<-- event received: {}'.format(json.dumps(event)))",
-								"        if event['ResourceProperties']['Graviton'] == 'True':",
-								"            searchString = event['ResourceProperties']['SearchString2']",
-								"        else:",
-								"            searchString = event['ResourceProperties']['SearchString1']",
+								"        searchString = event['ResourceProperties']['SearchString']",
+								"        productCode =  event['ResourceProperties']['ProductCode']",
 								"    else:",
 								"        responseData = {'msg':'200'}",
 								"        cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)",
@@ -2771,7 +2769,7 @@
 								"",
 								"    try:",
 								"        resp = client.describe_images(",
-								"            Filters=[{'Name': 'name', 'Values': [searchString]}],",
+								"            Filters=[{'Name': 'name', 'Values': [searchString]}, {'Name': 'product-code', 'Values': [productCode]}],",
 								"            Owners=['aws-marketplace']",
 								"        )",
 								"    except Exception as error:",
@@ -2786,12 +2784,12 @@
 								"            key = entry['CreationDate']",
 								"            ami_dict[key] = entry['ImageId']",
 								"        ami_list = sorted(ami_dict, reverse = True)",
-								"        logger.info('--> found latest AMI: {}, {}, {}'.format(ami_dict[ami_list[0]], ami_list[0], searchString))",
+								"        logger.info('--> found latest AMI: {}, {}, {} {}'.format(ami_dict[ami_list[0]], ami_list[0], searchString, productCode))",
 								"        responseData = {'ami': ami_dict[ami_list[0]]}",
 								"        cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)",
 								"    else:",
-								"        logger.error('!!--> Unable to find AMI {} in describe_images response! {}'.format(searchString,resp))",
-								"        responseData = {'msg':'Unable to find AMI {} in describe_images response! {}'.format(searchString,resp)}",
+								"        logger.error('!!--> Unable to find AMI {} {} in describe_images response! {}'.format(searchString, productCode, resp))",
+								"        responseData = {'msg':'Unable to find AMI {} {} in describe_images response! {}'.format(searchString, productCode,resp)}",
 								"        cfnresponse.send(event, context, cfnresponse.FAILED, responseData)",
 								""
 							]
@@ -2819,32 +2817,97 @@
 						"Arn"
 					]
 				},
-				"Graviton": {
+				"SearchString": {
 					"Fn::If": [
 						"Graviton",
-						"True",
-						"False"
-					]
-				},
-				"SearchString1": {
-					"Fn::FindInMap": [
-						"FortiOSIntelAMISearchString",
 						{
-							"Ref": "FortiOSVersion"
+							"Fn::Select": [
+								"0",
+								{
+									"Fn::Split": [
+										"|",
+										{
+											"Fn::FindInMap": [
+												"FortiOSArmAMISearchString",
+												{
+													"Ref": "FortiOSVersion"
+												},
+												{
+													"Ref": "LicenseType"
+												}
+											]
+										}
+									]
+								}
+							]
 						},
 						{
-							"Ref": "LicenseType"
+							"Fn::Select": [
+								"0",
+								{
+									"Fn::Split": [
+										"|",
+										{
+											"Fn::FindInMap": [
+												"FortiOSIntelAMISearchString",
+												{
+													"Ref": "FortiOSVersion"
+												},
+												{
+													"Ref": "LicenseType"
+												}
+											]
+										}
+									]
+								}
+							]
 						}
 					]
 				},
-				"SearchString2": {
-					"Fn::FindInMap": [
-						"FortiOSArmAMISearchString",
+				"ProductCode": {
+					"Fn::If": [
+						"Graviton",
 						{
-							"Ref": "FortiOSVersion"
+							"Fn::Select": [
+								"1",
+								{
+									"Fn::Split": [
+										"|",
+										{
+											"Fn::FindInMap": [
+												"FortiOSArmAMISearchString",
+												{
+													"Ref": "FortiOSVersion"
+												},
+												{
+													"Ref": "LicenseType"
+												}
+											]
+										}
+									]
+								}
+							]
 						},
 						{
-							"Ref": "LicenseType"
+							"Fn::Select": [
+								"1",
+								{
+									"Fn::Split": [
+										"|",
+										{
+											"Fn::FindInMap": [
+												"FortiOSIntelAMISearchString",
+												{
+													"Ref": "FortiOSVersion"
+												},
+												{
+													"Ref": "LicenseType"
+												}
+											]
+										}
+									]
+								}
+							]
 						}
 					]
 				}
