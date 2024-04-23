@@ -1,6 +1,6 @@
 {
 	"AWSTemplateFormatVersion": "2010-09-09",
-	"Description": "(v10.2) AWS CFT to deploy a FGCP based Active-Passive HA solution with two FortiGates in two AZs",
+	"Description": "(v10.3) AWS CFT to deploy a FGCP based Active-Passive HA solution with two FortiGates in two AZs",
 	"Metadata": {
 		"AWS::CloudFormation::Interface": {
 			"ParameterGroups": [
@@ -1450,21 +1450,69 @@
 		"ClusterEIP": {
 			"Type": "AWS::EC2::EIP",
 			"Properties": {
-				"Domain": "vpc"
+				"Domain": "vpc",
+				"Tags": [
+					{
+						"Key": "Name",
+						"Value": {
+							"Fn::Join": [
+								"-",
+								[
+									{
+										"Ref": "AWS::StackName"
+									},
+									"ClusterEIP"
+								]
+							]
+						}
+					}
+				]
 			}
 		},
 		"Fgt1EIP": {
 			"Type": "AWS::EC2::EIP",
 			"Condition": "PublicEC2API",
 			"Properties": {
-				"Domain": "vpc"
+				"Domain": "vpc",
+				"Tags": [
+					{
+						"Key": "Name",
+						"Value": {
+							"Fn::Join": [
+								"-",
+								[
+									{
+										"Ref": "AWS::StackName"
+									},
+									"Fgt1-HAMgmtEIP"
+								]
+							]
+						}
+					}
+				]
 			}
 		},
 		"Fgt2EIP": {
 			"Type": "AWS::EC2::EIP",
 			"Condition": "PublicEC2API",
 			"Properties": {
-				"Domain": "vpc"
+				"Domain": "vpc",
+				"Tags": [
+					{
+						"Key": "Name",
+						"Value": {
+							"Fn::Join": [
+								"-",
+								[
+									{
+										"Ref": "AWS::StackName"
+									},
+									"Fgt2-HAMgmtEIP"
+								]
+							]
+						}
+					}
+				]
 			}
 		},
 		"ClusterIPASSOCIATION": {
@@ -1493,7 +1541,11 @@
 					]
 				}
 			},
-			"DependsOn": "ClusterEIP"
+			"DependsOn": [
+				"Fgt1",
+				"Fgt1Eni0",
+				"ClusterEIP"
+			]
 		},
 		"Fgt1Eni1": {
 			"Type": "AWS::EC2::NetworkInterface",
@@ -1698,7 +1750,11 @@
 					]
 				}
 			},
-			"DependsOn": "Fgt1EIP"
+			"DependsOn": [
+				"Fgt1",
+				"Fgt1Eni2",
+				"Fgt1EIP"
+			]
 		},
 		"Fgt2EIPASSOCIATION": {
 			"Type": "AWS::EC2::EIPAssociation",
@@ -1727,7 +1783,11 @@
 					]
 				}
 			},
-			"DependsOn": "Fgt2EIP"
+			"DependsOn": [
+				"Fgt2",
+				"Fgt2Eni2",
+				"Fgt2EIP"
+			]
 		},
 		"LambdaRole": {
 			"Type": "AWS::IAM::Role",
