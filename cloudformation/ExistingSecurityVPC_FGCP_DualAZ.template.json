@@ -1,6 +1,6 @@
 {
 	"AWSTemplateFormatVersion": "2010-09-09",
-	"Description": "(v10.3) AWS CFT to deploy a FGCP based Active-Passive HA solution with two FortiGates in two AZs",
+	"Description": "(v12.0) AWS CFT to deploy a dual AZ A-P solution, repo: https://github.com/FortinetCloudCSE/fortigate-aws-gwlb-cloudformation",
 	"Metadata": {
 		"AWS::CloudFormation::Interface": {
 			"ParameterGroups": [
@@ -264,16 +264,16 @@
 		},
 		"InitS3Bucket": {
 			"Type": "String",
-			"Description": "[BYOL Only, leave blank otherwise] Provide the Init S3 Bucket name, where your config files will be created  *** the bucket should exist in the same region as this deployment for successful bootstrapping ***"
+			"Description": "[BYOL Only, leave blank otherwise] Provide the Init S3 Bucket name, where your config files will be created. ***Note*** the bucket should exist in the same region as this deployment for successful bootstrapping"
 		},
 		"FortiOSVersion": {
 			"Type": "String",
-			"Default": "7.2.x",
-			"Description": "Select the verion of FortiOS to use (latest GA AMI will be used)",
+			"Default": "7.4.x",
+			"Description": "Select the version of FortiOS to use (latest GA AMI will be used)",
 			"AllowedValues": [
-				"7.0.x",
 				"7.2.x",
-				"7.4.x"
+				"7.4.x",
+				"7.6.x"
 			]
 		},
 		"LicenseType": {
@@ -313,16 +313,6 @@
 	},
 	"Mappings": {
 		"FortiOSIntelAMISearchString": {
-			"6.4.x": {
-				"BYOL": "FortiGate-VM64-AWS *(6.4.*)*|dlaioq277sglm5mw1y1dmeuqa",
-				"Flex": "FortiGate-VM64-AWS *(6.4.*)*|dlaioq277sglm5mw1y1dmeuqa",
-				"PAYG": "FortiGate-VM64-AWSONDEMAND *(6.4.*)*|2wqkpek696qhdeo7lbbjncqli"
-			},
-			"7.0.x": {
-				"BYOL": "FortiGate-VM64-AWS *(7.0.*)*|dlaioq277sglm5mw1y1dmeuqa",
-				"Flex": "FortiGate-VM64-AWS *(7.0.*)*|dlaioq277sglm5mw1y1dmeuqa",
-				"PAYG": "FortiGate-VM64-AWSONDEMAND *(7.0.*)*|2wqkpek696qhdeo7lbbjncqli"
-			},
 			"7.2.x": {
 				"BYOL": "FortiGate-VM64-AWS *(7.2.*)*|dlaioq277sglm5mw1y1dmeuqa",
 				"Flex": "FortiGate-VM64-AWS *(7.2.*)*|dlaioq277sglm5mw1y1dmeuqa",
@@ -332,19 +322,14 @@
 				"BYOL": "FortiGate-VM64-AWS *(7.4.*)*|dlaioq277sglm5mw1y1dmeuqa",
 				"Flex": "FortiGate-VM64-AWS *(7.4.*)*|dlaioq277sglm5mw1y1dmeuqa",
 				"PAYG": "FortiGate-VM64-AWSONDEMAND *(7.4.*)*|2wqkpek696qhdeo7lbbjncqli"
+			},
+			"7.6.x": {
+				"BYOL": "FortiGate-VM64-AWS *(7.6.*)*|dlaioq277sglm5mw1y1dmeuqa",
+				"Flex": "FortiGate-VM64-AWS *(7.6.*)*|dlaioq277sglm5mw1y1dmeuqa",
+				"PAYG": "FortiGate-VM64-AWSONDEMAND *(7.6.*)*|2wqkpek696qhdeo7lbbjncqli"
 			}
 		},
 		"FortiOSArmAMISearchString": {
-			"6.4.x": {
-				"BYOL": "FortiGate-VMARM64-AWS *(6.4.*)*|33ndn84xbrajb9vmu5lxnfpjq",
-				"Flex": "FortiGate-VMARM64-AWS *(6.4.*)*|33ndn84xbrajb9vmu5lxnfpjq",
-				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(6.4.*)*|8gc40z1w65qjt61p9ps88057n"
-			},
-			"7.0.x": {
-				"BYOL": "FortiGate-VMARM64-AWS *(7.0.*)*|33ndn84xbrajb9vmu5lxnfpjq",
-				"Flex": "FortiGate-VMARM64-AWS *(7.0.*)*|33ndn84xbrajb9vmu5lxnfpjq",
-				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(7.0.*)*|8gc40z1w65qjt61p9ps88057n"
-			},
 			"7.2.x": {
 				"BYOL": "FortiGate-VMARM64-AWS *(7.2.*)*|33ndn84xbrajb9vmu5lxnfpjq",
 				"Flex": "FortiGate-VMARM64-AWS *(7.2.*)*|33ndn84xbrajb9vmu5lxnfpjq",
@@ -354,6 +339,11 @@
 				"BYOL": "FortiGate-VMARM64-AWS *(7.4.*)*|33ndn84xbrajb9vmu5lxnfpjq",
 				"Flex": "FortiGate-VMARM64-AWS *(7.4.*)*|33ndn84xbrajb9vmu5lxnfpjq",
 				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(7.4.*)*|8gc40z1w65qjt61p9ps88057n"
+			},
+			"7.6.x": {
+				"BYOL": "FortiGate-VMARM64-AWS *(7.6.*)*|33ndn84xbrajb9vmu5lxnfpjq",
+				"Flex": "FortiGate-VMARM64-AWS *(7.6.*)*|33ndn84xbrajb9vmu5lxnfpjq",
+				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(7.6.*)*|8gc40z1w65qjt61p9ps88057n"
 			}
 		}
 	},
@@ -651,6 +641,7 @@
 									"Sid": "SDNConnectorFortiView",
 									"Effect": "Allow",
 									"Action": [
+										"ec2:DescribeNetworkInterfaces",
 										"ec2:DescribeRegions",
 										"eks:DescribeCluster",
 										"eks:ListClusters",
@@ -723,6 +714,7 @@
 		},
 		"Fgt1": {
 			"Type": "AWS::EC2::Instance",
+			"DependsOn": "RunInitFunction1",
 			"Properties": {
 				"ImageId": {
 					"Fn::GetAtt": [
@@ -835,7 +827,7 @@
 										"\"config\"",
 										" : ",
 										"\"",
-										"/fgt1.txt\"",
+										"/fgt1-config.txt\"",
 										"\n",
 										"}"
 									]
@@ -852,150 +844,12 @@
 										"Content-Type: text/x-shellscript; charset='us-ascii'",
 										"MIME-Version: 1.0",
 										"",
-										"config system vdom-exception",
-										"edit 1",
-										"set object system.interface",
-										"next",
-										"edit 2",
-										"set object router.static",
-										"next",
-										"end",
-										"config system settings",
-										"set allow-subnet-overlap enable",
-										"end",
-										"config system global",
-										"set hostname Fgt1",
-										"set admintimeout 60",
-										"end",
 										{
-											"Fn::If": [
-												"PrivateEC2API",
-												{
-													"Fn::Join": [
-														"\n",
-														[
-															"config system dns",
-															"set primary 169.254.169.253",
-															"unset secondary",
-															"unset protocol",
-															"unset server-select-method",
-															"end"
-														]
-													]
-												},
-												{
-													"Ref": "AWS::NoValue"
-												}
+											"Fn::GetAtt": [
+												"RunInitFunction1",
+												"fgt_config"
 											]
 										},
-										"config system interface",
-										"edit port1",
-										"set alias public",
-										"set mode static",
-										{
-											"Fn::Sub": "set ip ${FortiGate1PublicIP}"
-										},
-										"set allowaccess ping https ssh fgfm",
-										"set secondary-IP enable",
-										"next",
-										"edit port2",
-										"set alias private",
-										"set mode static",
-										{
-											"Fn::Sub": "set ip ${FortiGate1PrivateIP}"
-										},
-										"set allowaccess ping https ssh",
-										"set mtu-override enable",
-										"set mtu 9001",
-										"next",
-										"edit port3",
-										"set alias hamgmt",
-										"set mode static",
-										{
-											"Fn::Sub": "set ip ${FortiGate1HAmgmtIP}"
-										},
-										"set allowaccess ping https ssh",
-										"set mtu-override enable",
-										"set mtu 9001",
-										"next",
-										"end",
-										"config router static",
-										"edit 1",
-										"set device port1",
-										{
-											"Fn::Sub": "set gateway ${PublicSubnet1RouterIP}"
-										},
-										"next",
-										"edit 2",
-										{
-											"Fn::Sub": "set dst ${VPCCIDR}"
-										},
-										"set device port2",
-										{
-											"Fn::Sub": "set gateway ${PrivateSubnet1RouterIP}"
-										},
-										"next",
-										"end",
-										"config firewall policy",
-										"edit 1",
-										"set name outbound-all",
-										"set srcintf port2",
-										"set dstintf port1",
-										"set srcaddr all",
-										"set dstaddr all",
-										"set action accept",
-										"set schedule always",
-										"set service ALL",
-										"set logtraffic all",
-										"set nat enable",
-										"next",
-										"end",
-										"config system sdn-connector",
-										"edit aws-instance-role",
-										"set status enable",
-										"set type aws",
-										"set use-metadata-iam enable",
-										"next",
-										"end",
-										"config system ha",
-										"set group-name group1",
-										"set mode a-p",
-										"set hbdev port3 50",
-										"set session-pickup enable",
-										"set ha-mgmt-status enable",
-										"config ha-mgmt-interface",
-										"edit 1",
-										"set interface port3",
-										{
-											"Fn::Sub": "set gateway ${HAMgmtSubnet1RouterIP}"
-										},
-										"next",
-										"end",
-										"set override disable",
-										"set priority 255",
-										"set unicast-hb enable",
-										{
-											"Fn::Join": [
-												"",
-												[
-													"set unicast-hb-peerip ",
-													{
-														"Fn::Select": [
-															"0",
-															{
-																"Fn::Split": [
-																	"/",
-																	{
-																		"Ref": "FortiGate2HAmgmtIP"
-																	}
-																]
-															}
-														]
-													}
-												]
-											]
-										},
-										"end",
 										"",
 										{
 											"Fn::If": [
@@ -1033,6 +887,7 @@
 		},
 		"Fgt2": {
 			"Type": "AWS::EC2::Instance",
+			"DependsOn": "RunInitFunction2",
 			"Properties": {
 				"ImageId": {
 					"Fn::GetAtt": [
@@ -1145,7 +1000,7 @@
 										"\"config\"",
 										" : ",
 										"\"",
-										"/fgt2.txt\"",
+										"/fgt2-config.txt\"",
 										"\n",
 										"}"
 									]
@@ -1162,150 +1017,12 @@
 										"Content-Type: text/x-shellscript; charset='us-ascii'",
 										"MIME-Version: 1.0",
 										"",
-										"config system vdom-exception",
-										"edit 1",
-										"set object system.interface",
-										"next",
-										"edit 2",
-										"set object router.static",
-										"next",
-										"end",
-										"config system settings",
-										"set allow-subnet-overlap enable",
-										"end",
-										"config system global",
-										"set hostname Fgt2",
-										"set admintimeout 60",
-										"end",
 										{
-											"Fn::If": [
-												"PrivateEC2API",
-												{
-													"Fn::Join": [
-														"\n",
-														[
-															"config system dns",
-															"set primary 169.254.169.253",
-															"unset secondary",
-															"unset protocol",
-															"unset server-select-method",
-															"end"
-														]
-													]
-												},
-												{
-													"Ref": "AWS::NoValue"
-												}
+											"Fn::GetAtt": [
+												"RunInitFunction2",
+												"fgt_config"
 											]
 										},
-										"config system interface",
-										"edit port1",
-										"set alias public",
-										"set mode static",
-										{
-											"Fn::Sub": "set ip ${FortiGate2PublicIP}"
-										},
-										"set allowaccess ping https ssh fgfm",
-										"set secondary-IP enable",
-										"next",
-										"edit port2",
-										"set alias private",
-										"set mode static",
-										{
-											"Fn::Sub": "set ip ${FortiGate2PrivateIP}"
-										},
-										"set allowaccess ping https ssh",
-										"set mtu-override enable",
-										"set mtu 9001",
-										"next",
-										"edit port3",
-										"set alias hamgmt",
-										"set mode static",
-										{
-											"Fn::Sub": "set ip ${FortiGate2HAmgmtIP}"
-										},
-										"set allowaccess ping https ssh",
-										"set mtu-override enable",
-										"set mtu 9001",
-										"next",
-										"end",
-										"config router static",
-										"edit 1",
-										"set device port1",
-										{
-											"Fn::Sub": "set gateway ${PublicSubnet2RouterIP}"
-										},
-										"next",
-										"edit 2",
-										{
-											"Fn::Sub": "set dst ${VPCCIDR}"
-										},
-										"set device port2",
-										{
-											"Fn::Sub": "set gateway ${PrivateSubnet2RouterIP}"
-										},
-										"next",
-										"end",
-										"config firewall policy",
-										"edit 1",
-										"set name outbound-all",
-										"set srcintf port2",
-										"set dstintf port1",
-										"set srcaddr all",
-										"set dstaddr all",
-										"set action accept",
-										"set schedule always",
-										"set service ALL",
-										"set logtraffic all",
-										"set nat enable",
-										"next",
-										"end",
-										"config system sdn-connector",
-										"edit aws-instance-role",
-										"set status enable",
-										"set type aws",
-										"set use-metadata-iam enable",
-										"next",
-										"end",
-										"config system ha",
-										"set group-name group1",
-										"set mode a-p",
-										"set hbdev port3 50",
-										"set session-pickup enable",
-										"set ha-mgmt-status enable",
-										"config ha-mgmt-interface",
-										"edit 1",
-										"set interface port3",
-										{
-											"Fn::Sub": "set gateway ${HAMgmtSubnet2RouterIP}"
-										},
-										"next",
-										"end",
-										"set override disable",
-										"set priority 1",
-										"set unicast-hb enable",
-										{
-											"Fn::Join": [
-												"",
-												[
-													"set unicast-hb-peerip ",
-													{
-														"Fn::Select": [
-															"0",
-															{
-																"Fn::Split": [
-																	"/",
-																	{
-																		"Ref": "FortiGate1HAmgmtIP"
-																	}
-																]
-															}
-														]
-													}
-												]
-											]
-										},
-										"end",
 										"",
 										{
 											"Fn::If": [
@@ -1899,7 +1616,7 @@
 				},
 				"Timeout": 120,
 				"Handler": "index.handler",
-				"Runtime": "python3.9",
+				"Runtime": "python3.12",
 				"MemorySize": 128
 			}
 		},
@@ -2010,7 +1727,6 @@
 		},
 		"InitFunction": {
 			"Type": "AWS::Lambda::Function",
-			"Condition": "BYOL",
 			"Properties": {
 				"Code": {
 					"ZipFile": {
@@ -2032,6 +1748,9 @@
 								"set object system.interface",
 								"next",
 								"edit 2",
+								"set object router.bgp",
+								"next",
+								"edit 3",
 								"set object router.static",
 								"next",
 								"end",
@@ -2068,14 +1787,14 @@
 								"set alias public",
 								"set mode static",
 								"set ip {Port1IP}",
-								"set allowaccess ping https ssh fgfm",
+								"set allowaccess ping https",
 								"set secondary-IP enable",
 								"next",
 								"edit port2",
 								"set alias private",
 								"set mode static",
 								"set ip {Port2IP}",
-								"set allowaccess ping https ssh",
+								"set allowaccess ping https",
 								"set mtu-override enable",
 								"set mtu 9001",
 								"next",
@@ -2083,7 +1802,7 @@
 								"set alias hamgmt",
 								"set mode static",
 								"set ip {Port3IP}",
-								"set allowaccess ping https ssh",
+								"set allowaccess ping https",
 								"set mtu-override enable",
 								"set mtu 9001",
 								"next",
@@ -2092,11 +1811,13 @@
 								"edit 1",
 								"set device port1",
 								"set gateway {PublicSubnetRouterIP}",
+								"set comment default-route",
 								"next",
 								"edit 2",
 								"set dst {VPCCIDR}",
 								"set device port2",
 								"set gateway {PrivateSubnetRouterIP}",
+								"set comment vpc-route",
 								"next",
 								"end",
 								"config firewall policy",
@@ -2118,6 +1839,7 @@
 								"set status enable",
 								"set type aws",
 								"set use-metadata-iam enable",
+								"set alt-resource-ip enable",
 								"next",
 								"end",
 								"config system ha",
@@ -2136,6 +1858,21 @@
 								"set priority {HApriority}",
 								"set unicast-hb enable",
 								"set unicast-hb-peerip {HApeer}",
+								"set ha-uptime-diff-margin 60",
+								"set route-ttl 30",
+								{
+									"Fn::Join": [
+										"",
+										[
+											"set password ",
+											{
+												"Fn::Base64": {
+													"Ref": "AWS::AccountId"
+												}
+											}
+										]
+									]
+								},
 								"end",
 								"\\",
 								"'''",
@@ -2143,46 +1880,51 @@
 								"def handler(event, context):",
 								"    if event['RequestType'] == 'Create':",
 								"        logger.info('<-- event received: {}'.format(json.dumps(event)))",
-								"        dict1 = ast.literal_eval(event['ResourceProperties']['FGT1Info'])",
-								"        dict2 = ast.literal_eval(event['ResourceProperties']['FGT2Info'])",
-								"        fgt1_conf = template.format(**dict1)",
-								"        fgt2_conf = template.format(**dict2)",
-								"        fgt1_result = False",
-								"        fgt2_result = False",
+								"        dict = ast.literal_eval(event['ResourceProperties']['FGTInfo'])",
+								"        fgt_config = template.format(**dict)",
 								"    else:",
 								"        responseData = {'msg':'200'}",
 								"        cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)",
 								"        return None",
 								"",
-								"    try:",
-								"        resp = s3.put_object(Body=fgt1_conf, Bucket=event['ResourceProperties']['S3Bucket'], Key='fgt1.txt')",
-								"    except Exception as error:",
-								"        logger.error('<--!! Exception: {}'.format(error))",
-								"        responseData = {'msg':'Exception: {}'.format(error)}",
-								"        cfnresponse.send(event, context, cfnresponse.FAILED, responseData)",
-								"        return None",
-								"    if resp['ResponseMetadata']['HTTPStatusCode'] == 200:",
-								"        fgt1_result = True",
-								"        logger.info('<-- s3 put_object fgt1.txt successful')",
-								"",
-								"    try:",
-								"        resp = s3.put_object(Body=fgt2_conf, Bucket=event['ResourceProperties']['S3Bucket'], Key='fgt2.txt')",
-								"    except Exception as error:",
-								"        logger.error('<--!! Exception: {}'.format(error))",
-								"        responseData = {'msg':'Exception: {}'.format(error)}",
-								"        cfnresponse.send(event, context, cfnresponse.FAILED, responseData)",
-								"        return None",
-								"    if resp['ResponseMetadata']['HTTPStatusCode'] == 200:",
-								"        fgt2_result = True",
-								"        logger.info('<-- s3 put_object fgt2.txt successful')",
-								"",
-								"    if fgt1_result is True and fgt2_result is True:",
-								"        responseData = {'msg':'200'}",
-								"        cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)",
-								"    else:",
-								"        responseData = {'msg':'error'}",
-								"        cfnresponse.send(event, context, cfnresponse.FAILED, responseData)",
-								""
+								{
+									"Fn::If": [
+										"BYOL",
+										{
+											"Fn::Join": [
+												"\n",
+												[
+													"    try:",
+													"        response = s3.put_object(Body=fgt_config, Bucket=event['ResourceProperties']['S3Bucket'], Key=event['ResourceProperties']['S3Key'])",
+													"    except Exception as error:",
+													"        logger.error('<--!! Exception: {}'.format(error))",
+													"        responseData = {'msg':'Exception: {}'.format(error)}",
+													"        cfnresponse.send(event, context, cfnresponse.FAILED, responseData)",
+													"        return None",
+													"",
+													"    if response['ResponseMetadata']['HTTPStatusCode'] == 200:",
+													"        logger.info('<-- s3 put_object {} successful'.format(event['ResourceProperties']['S3Key']))",
+													"        responseData = {'fgt_config':fgt_config}",
+													"        cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)",
+													"    else:",
+													"        responseData = {'msg':'error'}",
+													"        cfnresponse.send(event, context, cfnresponse.FAILED, responseData)",
+													""
+												]
+											]
+										},
+										{
+											"Fn::Join": [
+												"\n",
+												[
+													"    responseData = {'fgt_config':fgt_config}",
+													"    cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)",
+													""
+												]
+											]
+										}
+									]
+								}
 							]
 						]
 					}
@@ -2195,13 +1937,12 @@
 				},
 				"Timeout": 120,
 				"Handler": "index.handler",
-				"Runtime": "python3.9",
+				"Runtime": "python3.12",
 				"MemorySize": 128
 			}
 		},
-		"RunInitFunction": {
+		"RunInitFunction1": {
 			"Type": "Custom::InitFunction",
-			"Condition": "BYOL",
 			"Properties": {
 				"ServiceToken": {
 					"Fn::GetAtt": [
@@ -2212,7 +1953,8 @@
 				"S3Bucket": {
 					"Ref": "InitS3Bucket"
 				},
-				"FGT1Info": {
+				"S3Key": "fgt1-config.txt",
+				"FGTInfo": {
 					"Fn::Join": [
 						"",
 						[
@@ -2272,8 +2014,23 @@
 							"}"
 						]
 					]
+				}
+			}
+		},
+		"RunInitFunction2": {
+			"Type": "Custom::InitFunction",
+			"Properties": {
+				"ServiceToken": {
+					"Fn::GetAtt": [
+						"InitFunction",
+						"Arn"
+					]
 				},
-				"FGT2Info": {
+				"S3Bucket": {
+					"Ref": "InitS3Bucket"
+				},
+				"S3Key": "fgt2-config.txt",
+				"FGTInfo": {
 					"Fn::Join": [
 						"",
 						[
