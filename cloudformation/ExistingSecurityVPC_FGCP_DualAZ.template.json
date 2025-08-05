@@ -714,7 +714,10 @@
 		},
 		"Fgt1": {
 			"Type": "AWS::EC2::Instance",
-			"DependsOn": "RunInitFunction1",
+			"DependsOn": [
+				"RunInitFunction1",
+				"RunInitFunction2"
+			],
 			"Properties": {
 				"ImageId": {
 					"Fn::GetAtt": [
@@ -887,7 +890,10 @@
 		},
 		"Fgt2": {
 			"Type": "AWS::EC2::Instance",
-			"DependsOn": "RunInitFunction2",
+			"DependsOn": [
+				"RunInitFunction1",
+				"RunInitFunction2"
+			],
 			"Properties": {
 				"ImageId": {
 					"Fn::GetAtt": [
