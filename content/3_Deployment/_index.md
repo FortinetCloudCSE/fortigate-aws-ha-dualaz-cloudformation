@@ -7,7 +7,7 @@ weight: 30
 
 Once the prerequisites have been satisfied proceed with the deployment steps below.
 
-1.  To download the templates, you can either clone the repo with the git command below, or [**download**](https://github.com/FortinetCloudCSE/fortigate-aws-ha-dualaz-cloudformation) the repo as a ZIP archive.  The templates themselves are located in the **/cloudformation folder**
+1.  To download the templates, you can either clone the repo with the git command below, or [**download**](https://github.com/FortinetCloudCSE/fortigate-aws-ha-dualaz-cloudformation) the repo as a ZIP archive.  The templates themselves are in the **/cloudformation folder**
 
 ```
 git clone https://github.com/FortinetCloudCSE/fortigate-aws-ha-dualaz-cloudformation.git
@@ -27,11 +27,11 @@ git clone https://github.com/FortinetCloudCSE/fortigate-aws-ha-dualaz-cloudforma
 
 	![](deploy3.png)
 
-5.  On the Specify Details page, you will be prompted for a stack name and parameters for the deployment.  We are using the **'NewSecurityVPC_FGCP_DualAZ.template.json'** template which deploys a new VPC, gives options for TGW integration, and deploys a FGCP cluster as well.
+5.  On the Specify Details page, you will be prompted for a stack name and parameters for the deployment.  We are using the **'NewVPC_FGCP_DualAZ.template.json'** template which deploys a new VPC, gives options for TGW or CWAN integration, and deploys a FGCP cluster as well.
 
 	![](deploy4a.png)
 	
-	We are chosing to deploy TGW so we have set both **'TgwAttach'** and **'TgwCreation'** to **'Yes'**.  Note you can also attach to an existing TGW by changing 'TgwCreation' to 'No' and providing the appropriate values for the 'TgwExisting...' parameters.
+	We are choosing to deploy TGW so we have set both **'Attachment'** and **'TgwCreation'** to **'Yes'**.  We also set **'CwanCreation'** to **'NO'**.  Note you can also attach to an existing TGW by changing 'TgwCreation' to 'No' and providing the appropriate values for the 'TgwExisting...' parameters.  The same applies for an existing CWAN using 'CwanExisting...' parameters.
 
 	![](deploy4b.png)
 
@@ -57,10 +57,10 @@ git clone https://github.com/FortinetCloudCSE/fortigate-aws-ha-dualaz-cloudforma
 
         ![](deploy10.png)
 
-11.  Once the stack creation has completed successfully, select the Outputs tab to get the login information for the FortiGate instances and cluster.  If you chose to deploy a new TGW as part of the deployment you will see the IDs of your Transit Gateway and relevant TGW Route Tables.  These will be used as inputs for the **'SpokeVPC_TGW_DualAZ.template.json'** template.
+11.  Once the stack creation has completed successfully, select the Outputs tab to get the login information for the FortiGate instances and cluster.  If you chose to deploy a new TGW as part of the deployment you will see the IDs of your Transit Gateway and relevant TGW Route Tables.  These will be used as inputs for the **'NewVPC_Spoke_DualAZ.template.json'** template.
 
 ![](deploy11.png)
 
-12.  Here is an example of deploying a spoke VPC using the **'SpokeVPC_TGW_DualAZ.template.json'** template.  Note we are referencing the relevant IDs for Transit Gateway and relevant TGW Route Tables created for us using the **'NewSecurityVPC_FGCP_DualAZ.template.json'** template.  **Note that you will need to add static routes to both FortiGate instances to reach the spoke VPC CIDR via the AWS intrinsic router IP through interface port2**.
+12.  Here is an example of deploying a spoke VPC using the **'NewVPC_Spoke_DualAZ.template.json'** template.  Note we are referencing the relevant IDs for Transit Gateway and relevant TGW Route Tables created for us using the **'NewVPC_FGCP_DualAZ.template.json'** template.
 
 ![](deploy12.png)
