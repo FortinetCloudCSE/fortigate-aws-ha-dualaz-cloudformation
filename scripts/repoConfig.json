@@ -3,7 +3,7 @@
 	"author": "Hiruy Aberra",
 	"workshopTitle": "fortigate-aws-ha-dualaz-cloudformation",
 	"themeVariant": "Workshop",
-	"logoBannerText": " ",
+	"logoBannerText": "",
 	"logoBannerSubText": "",
 	"errorLevel": "warning",
 	"googleServicesID": "G-5RZBH288ST",

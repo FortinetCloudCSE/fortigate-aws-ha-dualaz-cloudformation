@@ -19,6 +19,6 @@ Before attempting to create a stack with the templates, a few prerequisites shou
 
 5.  If BYOL licensing is to be used, upload these licenses to the root directory of the same S3 bucket from the step above.
 
-6.  **Ensure that an S3 gateway endpoint is deployed and assigned to both of the PublicSubnet's AWS route table.**  If you are using the 'NewSecurityVPC_FGCP_DualAZ.template.json' template, then this will be deployed for you.  Reference [**AWS Documentation**](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-gateway.html#create-gateway-endpoint) for further information.
+6.  **Ensure that an S3 gateway endpoint is deployed and assigned to both of the PublicSubnet's AWS route table.**  If you are using the 'NewVPC_FGCP_DualAZ.template.json' template, then this will be deployed for you.  Reference [**AWS Documentation**](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-gateway.html#create-gateway-endpoint) for further information.
 
 7.  **Ensure that all of the PublicSubnet's and HAmgmtSubnet's AWS route tables have a default route to an AWS Internet Gateway.**  Reference [**AWS Documentation**](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html#route-tables-internet-gateway) for further information.  Otherwise you must set the variable **only_private_ec2_api** to **'yes'**.
