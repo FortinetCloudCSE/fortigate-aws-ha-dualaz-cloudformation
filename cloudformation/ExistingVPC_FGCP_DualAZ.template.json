@@ -821,42 +821,7 @@
 						"Fn::If": [
 							"BYOL",
 							{
-								"Fn::Join": [
-									"",
-									[
-										"{\n",
-										"\"bucket\"",
-										" : \"",
-										{
-											"Ref": "InitS3Bucket"
-										},
-										"\"",
-										",\n",
-										"\"region\"",
-										" : ",
-										"\"",
-										{
-											"Ref": "AWS::Region"
-										},
-										"\"",
-										",\n",
-										"\"license\"",
-										" : ",
-										"\"",
-										"/",
-										{
-											"Ref": "FortiGate1LicenseFile"
-										},
-										"\"",
-										",\n",
-										"\"config\"",
-										" : ",
-										"\"",
-										"/fgt1-config.txt\"",
-										"\n",
-										"}"
-									]
-								]
+								"Fn::Sub": "{\"bucket\":\"${InitS3Bucket}\",\"region\":\"${AWS::Region}\",\"license\":\"/${FortiGate1LicenseFile}\",\"config\":\"/fgt1-config.txt\"}"
 							},
 							{
 								"Fn::Join": [
@@ -989,42 +954,7 @@
 						"Fn::If": [
 							"BYOL",
 							{
-								"Fn::Join": [
-									"",
-									[
-										"{\n",
-										"\"bucket\"",
-										" : \"",
-										{
-											"Ref": "InitS3Bucket"
-										},
-										"\"",
-										",\n",
-										"\"region\"",
-										" : ",
-										"\"",
-										{
-											"Ref": "AWS::Region"
-										},
-										"\"",
-										",\n",
-										"\"license\"",
-										" : ",
-										"\"",
-										"/",
-										{
-											"Ref": "FortiGate2LicenseFile"
-										},
-										"\"",
-										",\n",
-										"\"config\"",
-										" : ",
-										"\"",
-										"/fgt2-config.txt\"",
-										"\n",
-										"}"
-									]
-								]
+								"Fn::Sub": "{\"bucket\":\"${InitS3Bucket}\",\"region\":\"${AWS::Region}\",\"license\":\"/${FortiGate2LicenseFile}\",\"config\":\"/fgt2-config.txt\"}"
 							},
 							{
 								"Fn::Join": [
