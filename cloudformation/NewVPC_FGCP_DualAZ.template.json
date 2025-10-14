@@ -1505,7 +1505,7 @@
 				]
 			}
 		},
-		"VPCRoute1": {
+		"Route1": {
 			"Type": "AWS::EC2::Route",
 			"DependsOn": "AttachGateway",
 			"Properties": {
@@ -1518,7 +1518,7 @@
 				}
 			}
 		},
-		"VPCRoute2": {
+		"Route2": {
 			"Type": "AWS::EC2::Route",
 			"Condition": "CreateAttachmentSubnets",
 			"DependsOn": "Fgt1Eni1",
@@ -1532,7 +1532,7 @@
 				}
 			}
 		},
-		"VPCRoute3": {
+		"Route3": {
 			"Type": "AWS::EC2::Route",
 			"Condition": "CreateVpcRouteToFgt1InPrivRtb",
 			"Properties": {
@@ -1545,7 +1545,7 @@
 				}
 			}
 		},
-		"VPCRoute4": {
+		"Route4": {
 			"Type": "AWS::EC2::Route",
 			"Condition": "CreateTgw",
 			"DependsOn": [
@@ -1563,7 +1563,7 @@
 				}
 			}
 		},
-		"VPCRoute5": {
+		"Route5": {
 			"Type": "AWS::EC2::Route",
 			"Condition": "ExistingTgw",
 			"DependsOn": [
@@ -1580,7 +1580,7 @@
 				}
 			}
 		},
-		"VPCRoute6": {
+		"Route6": {
 			"Type": "AWS::EC2::Route",
 			"Condition": "CreateCwan",
 			"DependsOn": "CloudWanVpcAttachment",
@@ -1606,7 +1606,7 @@
 				}
 			}
 		},
-		"VPCRoute7": {
+		"Route7": {
 			"Type": "AWS::EC2::Route",
 			"Condition": "ExistingCwan",
 			"DependsOn": "ExistingCloudWanVpcAttachment",
@@ -2007,42 +2007,7 @@
 						"Fn::If": [
 							"BYOL",
 							{
-								"Fn::Join": [
-									"",
-									[
-										"{\n",
-										"\"bucket\"",
-										" : \"",
-										{
-											"Ref": "InitS3Bucket"
-										},
-										"\"",
-										",\n",
-										"\"region\"",
-										" : ",
-										"\"",
-										{
-											"Ref": "AWS::Region"
-										},
-										"\"",
-										",\n",
-										"\"license\"",
-										" : ",
-										"\"",
-										"/",
-										{
-											"Ref": "FortiGate1LicenseFile"
-										},
-										"\"",
-										",\n",
-										"\"config\"",
-										" : ",
-										"\"",
-										"/fgt1-config.txt\"",
-										"\n",
-										"}"
-									]
-								]
+								"Fn::Sub": "{\"bucket\":\"${InitS3Bucket}\",\"region\":\"${AWS::Region}\",\"license\":\"/${FortiGate1LicenseFile}\",\"config\":\"/fgt1-config.txt\"}"
 							},
 							{
 								"Fn::Join": [
@@ -2175,42 +2140,7 @@
 						"Fn::If": [
 							"BYOL",
 							{
-								"Fn::Join": [
-									"",
-									[
-										"{\n",
-										"\"bucket\"",
-										" : \"",
-										{
-											"Ref": "InitS3Bucket"
-										},
-										"\"",
-										",\n",
-										"\"region\"",
-										" : ",
-										"\"",
-										{
-											"Ref": "AWS::Region"
-										},
-										"\"",
-										",\n",
-										"\"license\"",
-										" : ",
-										"\"",
-										"/",
-										{
-											"Ref": "FortiGate2LicenseFile"
-										},
-										"\"",
-										",\n",
-										"\"config\"",
-										" : ",
-										"\"",
-										"/fgt2-config.txt\"",
-										"\n",
-										"}"
-									]
-								]
+								"Fn::Sub": "{\"bucket\":\"${InitS3Bucket}\",\"region\":\"${AWS::Region}\",\"license\":\"/${FortiGate2LicenseFile}\",\"config\":\"/fgt2-config.txt\"}"
 							},
 							{
 								"Fn::Join": [
@@ -3417,6 +3347,16 @@
 			},
 			"Condition": "CreateCwan",
 			"Description": "Cloud WAN Core Network ID, for use in spoke template"
+		},
+		"CloudWanSegmentKey": {
+			"Value": "segment",
+			"Condition": "CreateCwan",
+			"Description": "Cloud WAN segment key, for use in spoke template"
+		},
+		"ClouCloudWanSegmentValue": {
+			"Value": "production,development,sharedservices",
+			"Condition": "CreateCwan",
+			"Description": "Cloud WAN segment value (use one of the examples), for use in spoke template"
 		},
 		"ExistingCloudWAN": {
 			"Value": {
