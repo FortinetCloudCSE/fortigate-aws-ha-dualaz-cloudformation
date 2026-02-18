@@ -1210,7 +1210,7 @@
 					"Ref": "VPC"
 				},
 				"Options": {
-					"ApplianceModeSupport": "true"
+					"ApplianceModeSupport": "enable"
 				},
 				"Tags": [
 					{
