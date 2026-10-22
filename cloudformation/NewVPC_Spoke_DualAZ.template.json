@@ -1,6 +1,6 @@
 {
 	"AWSTemplateFormatVersion": "2010-09-09",
-	"Description": "(v5.0) AWS CFT to deploy a dual AZ spoke VPC for a dual AZ A-P solution, repo: https://github.com/FortinetCloudCSE/fortigate-aws-ha-dualaz-cloudformation",
+	"Description": "(v26.4.1) AWS CFT to deploy a dual AZ spoke VPC for a dual AZ A-P solution, repo: https://github.com/FortinetCloudCSE/fortigate-aws-ha-dualaz-cloudformation",
 	"Metadata": {
 		"AWS::CloudFormation::Interface": {
 			"ParameterGroups": [
@@ -539,9 +539,6 @@
 			"Properties": {
 				"CoreNetworkId": {
 					"Ref": "CloudWan"
-				},
-				"Options": {
-					"ApplianceModeSupport": "true"
 				},
 				"SubnetArns": [
 					{
