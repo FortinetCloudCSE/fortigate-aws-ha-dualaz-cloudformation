@@ -298,12 +298,12 @@
 		},
 		"FortiOSVersion": {
 			"Type": "String",
-			"Default": "7.4.x",
+			"Default": "7.6.x",
 			"Description": "Select the version of FortiOS to use (latest GA AMI will be used)",
 			"AllowedValues": [
-				"7.2.x",
 				"7.4.x",
-				"7.6.x"
+				"7.6.x",
+				"8.0.x"
 			]
 		},
 		"LicenseType": {
@@ -357,6 +357,11 @@
 				"BYOL": "FortiGate-VM64-AWS *(7.6.*)*|dlaioq277sglm5mw1y1dmeuqa",
 				"Flex": "FortiGate-VM64-AWS *(7.6.*)*|dlaioq277sglm5mw1y1dmeuqa",
 				"PAYG": "FortiGate-VM64-AWSONDEMAND *(7.6.*)*|2wqkpek696qhdeo7lbbjncqli"
+			},
+			"8.0.x": {
+				"BYOL": "FortiGate-VM64-AWS *(8.0.*)*|dlaioq277sglm5mw1y1dmeuqa",
+				"Flex": "FortiGate-VM64-AWS *(8.0.*)*|dlaioq277sglm5mw1y1dmeuqa",
+				"PAYG": "FortiGate-VM64-AWSONDEMAND *(8.0.*)*|2wqkpek696qhdeo7lbbjncqli"
 			}
 		},
 		"FortiOSArmAMISearchString": {
@@ -374,6 +379,11 @@
 				"BYOL": "FortiGate-VMARM64-AWS *(7.6.*)*|33ndn84xbrajb9vmu5lxnfpjq",
 				"Flex": "FortiGate-VMARM64-AWS *(7.6.*)*|33ndn84xbrajb9vmu5lxnfpjq",
 				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(7.6.*)*|8gc40z1w65qjt61p9ps88057n"
+			},
+			"8.0.x": {
+				"BYOL": "FortiGate-VMARM64-AWS *(8.0.*)*|33ndn84xbrajb9vmu5lxnfpjq",
+				"Flex": "FortiGate-VMARM64-AWS *(8.0.*)*|33ndn84xbrajb9vmu5lxnfpjq",
+				"PAYG": "FortiGate-VMARM64-AWSONDEMAND *(8.0.*)*|8gc40z1w65qjt61p9ps88057n"
 			}
 		}
 	},
